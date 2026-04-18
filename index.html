@@ -1404,18 +1404,21 @@
   }
 
   function submitForm() {
-    // Honeypot check — reject bots
+    // Honeypot check — reject bots silently
     if (document.getElementById('honeypot').value !== '') {
-    return;
+      return;
     }
-    
+  
     const btn = document.getElementById('submitBtn');
+  
+    // Validate all fields
     const v1 = validateField('firstName', 'group-firstName', v => v.length > 0);
-    const v2 = validateField('lastName', 'group-lastName', v => v.length > 0);
-    const v3 = validateField('email', 'group-email', v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v));
-    const v4 = validateField('topic', 'group-topic', v => v.length > 0);
-    const v5 = validateField('message', 'group-message', v => v.length > 10);
-
+    const v2 = validateField('lastName',  'group-lastName',  v => v.length > 0);
+    const v3 = validateField('email',     'group-email',     v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v));
+    const v4 = validateField('topic',     'group-topic',     v => v.length > 0);
+    const v5 = validateField('message',   'group-message',   v => v.length > 10);
+  
+    // Consent check
     const consent = document.getElementById('consent');
     if (!consent.checked) {
       consent.parentElement.style.border = '1px solid #e05b5b';
@@ -1423,17 +1426,51 @@
       consent.parentElement.style.padding = '8px';
       return;
     }
-
+  
     if (!v1 || !v2 || !v3 || !v4 || !v5) return;
-
+  
+    // ── SEND TO GOOGLE APPS SCRIPT ──────────────────────
+    const GAS_URL = "YOUR_GAS_WEBAPP_URL_HERE"; // ← paste your real URL here
+  
     btn.disabled = true;
     btn.textContent = 'Sending…';
-
-    // Simulate send (replace with actual Google Apps Script or EmailJS)
-    setTimeout(() => {
-      document.getElementById('formContent').style.display = 'none';
-      document.getElementById('formSuccess').style.display = 'block';
-    }, 1200);
+  
+    fetch(GAS_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        formType  : "enquiry",
+        firstName : document.getElementById('firstName').value.trim(),
+        lastName  : document.getElementById('lastName').value.trim(),
+        email     : document.getElementById('email').value.trim(),
+        location  : document.getElementById('location').value.trim(),
+        topic     : document.getElementById('topic').value,
+        format    : document.getElementById('format').value,
+        message   : document.getElementById('message').value.trim(),
+        honeypot  : document.getElementById('honeypot').value,
+        consent   : true,
+      })
+    })
+    .then(response => response.json())
+    .then(result => {
+      if (result.success) {
+        // Show success message
+        document.getElementById('formContent').style.display = 'none';
+        document.getElementById('formSuccess').style.display  = 'block';
+      } else {
+        // Show error — re-enable button
+        btn.disabled = false;
+        btn.textContent = 'Try Again';
+        alert('Something went wrong. Please email marina@holisden.com directly.');
+      }
+    })
+    .catch(err => {
+      // Network error — re-enable button
+      btn.disabled = false;
+      btn.textContent = 'Try Again';
+      alert('Network error. Please email marina@holisden.com directly.');
+    });
+    // ── END GAS SEND ─────────────────────────────────────
   }
 
   // Clear errors on input
