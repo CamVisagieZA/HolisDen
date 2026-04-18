@@ -25,12 +25,14 @@ Serving clients in-person (New Plymouth, NZ) and online worldwide.
 ---
 
 ## 📁 Repository Structure
-HolisDen/
-│
-├── index.html          # Main website (single-page)
-├── ClientPortal.html   # 3-step client portal
-├── Code.gs             # Google Apps Script backend reference
-└── README.md           # This file
+
+| File | Description |
+|------|-------------|
+| `index.html` | Main website (single-page) |
+| `ClientPortal.html` | 3-step client portal (enquiry, intake, consent) |
+| `Code.gs` | Google Apps Script backend reference |
+| `README.md` | This file |
+
 ---
 
 ## 🖥️ Tech Stack
