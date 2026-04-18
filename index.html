@@ -1295,7 +1295,9 @@
           <textarea id="message" placeholder="Share as much or as little as you're comfortable with..."></textarea>
           <span class="error-msg">Please share a little about what you're looking for</span>
         </div>
-
+        <!-- Honeypot — hidden from real users, catches bots -->
+        <input type="text" id="honeypot" name="honeypot" style="display:none" tabindex="-1" autocomplete="off">
+        
         <div class="consent-row">
           <input type="checkbox" id="consent">
           <label for="consent">I agree to be contacted by Marina Coetzee / HolisDen regarding my enquiry. Your information will never be shared with third parties.</label>
@@ -1402,8 +1404,12 @@
   }
 
   function submitForm() {
+    // Honeypot check — reject bots
+    if (document.getElementById('honeypot').value !== '') {
+    return;
+    }
+    
     const btn = document.getElementById('submitBtn');
-
     const v1 = validateField('firstName', 'group-firstName', v => v.length > 0);
     const v2 = validateField('lastName', 'group-lastName', v => v.length > 0);
     const v3 = validateField('email', 'group-email', v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v));
