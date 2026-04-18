@@ -34,6 +34,8 @@ Serving clients in-person (New Plymouth, NZ) and online worldwide.
 
 > **Note:** `Code.gs` is maintained privately in Google Apps Script 
 > and is not stored in this repository for security reasons.
+> **Note:** `ClientPortal.html` is maintained privately in Google Apps Script 
+> and is not stored in this repository for security reasons.
 
 ---
 
