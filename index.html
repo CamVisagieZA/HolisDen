@@ -516,10 +516,16 @@
     display: grid; grid-template-columns: repeat(4,1fr); gap: 40px;
     margin-top: 60px; position: relative; z-index: 1;
   }
-  .process-steps::before {
+  /*.process-steps::before {
     content: '';
     position: absolute; top: 28px; left: calc(12.5% + 20px); right: calc(12.5% + 20px);
     height: 1px; background: rgba(255,255,255,0.15);
+  }*/
+  .process-steps::before {
+    content: '';
+    position: absolute; top: 28px; left: calc(12.5% + 48px); right: calc(12.5% + 48px);
+    height: 1px; background: rgba(255,255,255,0.15);
+    z-index: 0;
   }
 
   .step { text-align: center; }
