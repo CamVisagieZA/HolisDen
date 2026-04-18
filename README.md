@@ -30,8 +30,10 @@ Serving clients in-person (New Plymouth, NZ) and online worldwide.
 |------|-------------|
 | `index.html` | Main website (single-page) |
 | `ClientPortal.html` | 3-step client portal (enquiry, intake, consent) |
-| `Code.gs` | Google Apps Script backend reference |
 | `README.md` | This file |
+
+> **Note:** `Code.gs` is maintained privately in Google Apps Script 
+> and is not stored in this repository for security reasons.
 
 ---
 
